@@ -8,11 +8,9 @@
         - Node.js (18.18.2)
         - Python (3.12)
         - PostgreSQL (16.2)
-    - Installation Instructions: 
-        ## Music Library Management System
-
-        ## Flask Backend Initial Setup
-
+    - Installation Instructions:
+    
+        Flask Backend Initial Setup
         1. Navigate into the backend folder
         2. Once the packages have been installed, create a virtual environment with this command 
         	```py -3 -m venv <name of enviornment>``` or ```python -m venv <name of environment>``` (depending on what version of python you have)
@@ -25,13 +23,12 @@
         8. Run the command: flask run to start the backend server.
         9. Lastly, if you want to exit the environment, you can use ```deactivate```
 
-        ## Vue Frontend Initial Setup
-        
+        Vue Frontend Initial Setup
         1. Navigate into the frontend folder, then the ```music-management-app``` folder
         2. Run the command ```npm install```
         3. Wait for packages to load, then run the command ```npm run dev``` 
         
-        ## Setting up PostgreSQL
+        Setting up PostgreSQL
         1. Head over to PostgreSQL's website and download their installer for your operating system. [Installer](https://www.postgresql.org/download/)
         2. Follow the installer wizard and install PostgreSQL.
         3. Add PostgreSQL's bin directory to the PATH environment variable:
