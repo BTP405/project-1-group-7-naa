@@ -1,35 +1,42 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/545oUMxH)
 
-### Please use the following template to add a ReadMe for your repo.
-
 ## 1. Project Title and Description
-    - Title: Provide a clear and concise title for your project.
-    - Description: Give a brief overview of what your project does and its purpose.
+    - 🎵 RiffRoom
+    - RiffRoom is a music library platform where users can upload songs, like their favorite songs, and create playlists for enjoyment.
 ## 2. Installation
-    - Dependencies: List any dependencies or prerequisites required to use your project.
-    - Installation Instructions: Provide step-by-step instructions on how to install and set up your project.
+    - **Dependencies**: 
+        - Node.js (18.18.2)
+        - Python (3.12)
+        - PostgreSQL (16.2)
+    - **Installation Instructions**: 
+        - TODO.
 ## 3. Usage
-    - Examples: Include examples or code snippets to demonstrate how to use your project.
-    - Configuration: Explain any configuration options or settings users might need to know about.
+    - **Examples**: 
+        - TODO.
+    - **Configuration**:
+        - TODO.
 ## 4. Features
-    - List of Features: Outline the main features and functionalities of your project.
+    - 🎸 **Features**:
+        - Login or register to access the platform
+        - Upload your songs and melodies
+        - Create personalized playlists
+        - Like your favorite songs
 ## 5. Contributing
-    - Guidelines: Explain how others can contribute to your project, including information on submitting bug reports, feature requests, or code contributions.
-    - Code Style: If applicable, provide guidelines or references to your code style.
+    - **Guidelines**:
+        - Bug Reports: If you encounter any issues while using RiffRoom, please open a new issue on our GitHub repository. Be sure to include detailed steps to reproduce the bug and any relevant information about your environment.
+        - Feature Requests: Open a new issue on our GitHub repository and share your thoughts.
+        - Code Contributions: If you would like to contribute code to RiffRoom, please fork our repository, make your changes, and submit a pull request. Be sure to provide a clear description of your changes.
+    - Code Style: N/A
 ## 6. Credits
-    - Authors: List the authors or contributors of the project.
-    - Acknowledgments: Mention any individuals or resources that helped inspire or support your project.
+    - **Authors**:
+        - John Turkson
+        - Hamzah Mandoo
+    - **Acknowledgments**:
+        - Inspired by SoundCloud Global Limited & Co. KG.
 ## 7. License
-    - License Information: Specify the license under which your project is distributed.
+    - **License Information**:
+        - RiffRoom is open-source software licensed under the [MIT License](https://choosealicense.com/licenses/mit/).
 ## 8. Additional Sections (Optional)
-    - FAQ: Include frequently asked questions and their answers.
-    - Troubleshooting: Provide solutions to common issues or troubleshooting tips.
-    - Roadmap: Outline the future development plans for your project.
-    - Changelog: Document changes and updates to your project over time.
-
-## Markdown Formatting Tips
-  - Use headings (#, ##, ###, etc.) to structure your document.
-  - Utilize lists (- or 1.) for easy-to-read information.
-  - Include links to relevant resources or documentation.
-  - Add code blocks using triple backticks (```) for code snippets.
-  - Use images or diagrams to enhance understanding where applicable.
+    - **Roadmap**:
+        - Browse other people's music
+        - UI Refinements
