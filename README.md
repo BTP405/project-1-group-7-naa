@@ -12,9 +12,11 @@
         - TODO.
 ## 3. Usage
     - Examples: 
-        - TODO.
+        - To start uploading your music first click on the register button on the top right and register for an account.
+        - Next Login to your account and start uploading music through the plus button next to uploads. Make sure to fill out the details of the mp3 file.
+        - Finally, you can create playlists and add the song you uploaded or like the song you uploaded to add it to your liked songs.
     - Configuration:
-        - TODO.
+        - N/A.
 ## 4. Features
     - 🎸 Features:
         - Login or register to access the platform
