@@ -1,6 +1,5 @@
 <script setup>
-
-const colorMode = useColorMode();
+const colorMode = useColorMode()
 
 colorMode.preference = 'garden'
 

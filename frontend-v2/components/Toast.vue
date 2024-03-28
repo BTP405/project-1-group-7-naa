@@ -8,7 +8,7 @@ const props = defineProps({
 <template>
     <div>
         <div class="toast">
-            <div :class="'alert ' && toastType">
+            <div :class="toastType">
                 <span>{{ message }}</span>
             </div>
         </div>
