@@ -50,3 +50,10 @@ class Playlist(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     user = db.relationship('User', backref=db.backref('playlists', lazy=True))
     musics = db.relationship('Music', secondary=association_table, back_populates='playlists')
+    likes = db.Column(db.Integer, default=0, nullable=False)
+    
+    def increment_likes(self):
+        self.likes += 1
+
+    def decrement_likes(self):
+        self.likes -= 1

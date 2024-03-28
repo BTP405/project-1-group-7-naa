@@ -1,5 +1,6 @@
 from flask import request, jsonify, Blueprint
 from .models import db, User, Playlist, Music
+from .controllers import UserAuth
 import base64
 
 # App Routes Decorator
@@ -8,24 +9,21 @@ app_routes = Blueprint('app_routes', __name__)
 # Auth endpoints
 @app_routes.route('/register', methods=['POST'])
 def register():
-    data = request.get_json()
-
-    if not data.get('username') or not data.get('password'):
-        return jsonify({'message': 'Username and password are required, '}), 400
-
-    hashed_password = User.generate_hash(data['password'])
-    new_user = User(username=data['username'], password=hashed_password)
-    db.session.add(new_user)
-    db.session.commit()
-    return jsonify({'message': 'New user created!'})
+    data = request.get_json();
+    response, status_code = UserAuth.register_user(data)
+    return response, status_code
+    
 
 @app_routes.route('/login', methods=['POST'])
 def login():
     data = request.get_json()
-    user = User.query.filter_by(username=data['username']).first()
-    if not user or not User.verify_hash(data['password'], user.password):
-        return jsonify({'message': 'Invalid username or password'}), 400
-    return jsonify({'id':user.id,'username':user.username,'message': 'Login successful'}), 200
+    return UserAuth.login_user(data)
+
+
+@app_routes.route('/logout', methods=['DELETE'])
+def logout():
+    return UserAuth.logout()
+
 
 
 # User endpoints

@@ -2,6 +2,10 @@ from flask import Flask
 from flask_cors import CORS
 from .models import db
 from .routes import app_routes
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 def create_app():
     
@@ -9,6 +13,7 @@ def create_app():
     CORS(app)
     app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:admin@localhost/music-app-db'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    app.secret_key = os.getenv('JWT_SECRET_KEY')
 
     # Register routes
     app.register_blueprint(app_routes)
