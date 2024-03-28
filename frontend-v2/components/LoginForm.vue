@@ -14,10 +14,14 @@ const onSubmit = handleSubmit(async (values, actions) => {
     // Reset the form and the field values to their initial values
     actions.resetForm();
 
-    // const serverResponse = await loginUser(values);
+    const serverResponse = await $fetch(loginRoute, {
+        method: 'POST',
+        body: values
+    });
 
-    // console.log(serverResponse);
-
+    if (serverResponse.status == true) {
+        navigateTo('/library')
+    }
 });
 
 
