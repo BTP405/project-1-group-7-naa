@@ -1,3 +1,3 @@
 export default defineNuxtRouteMiddleware((to, from) => {
-    console.log('from auth middleware');
+    console.log('from auth middleware', to, from);
 })

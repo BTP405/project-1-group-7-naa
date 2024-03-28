@@ -74,12 +74,7 @@ class UserAuth:
     @staticmethod
     def set_cookie(token):
         try:
-            # Construct the response data as a dictionary
-            # response_data = {'status': True, 'msg': 'Login Successful'}   
-            
-            # session['x-auth-token'] = token
-            
-            return {'statusCode': 201, 'body': token}
+            return jsonify({'token': token}), 201
         except Exception as e:
             # If an error occurs, return an error response
             error_response_data = {'status': False, 'msg': 'Error setting cookie', 'error': str(e)}
