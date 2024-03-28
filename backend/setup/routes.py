@@ -25,7 +25,7 @@ def login():
     user = User.query.filter_by(username=data['username']).first()
     if not user or not User.verify_hash(data['password'], user.password):
         return jsonify({'message': 'Invalid username or password'}), 400
-    return jsonify({'id':user.id,'username':user.username,'message': 'Login successful'})
+    return jsonify({'id':user.id,'username':user.username,'message': 'Login successful'}), 200
 
 
 # User endpoints
