@@ -4,7 +4,7 @@ export default defineNuxtConfig({
   alias: {
     pinia: "/node_modules/@pinia/nuxt/node_modules/pinia/dist/pinia.mjs"
   },
-  modules: ['@nuxtjs/tailwindcss', '@nuxtjs/color-mode', '@vee-validate/nuxt', '@pinia/nuxt'],
+  modules: ['@nuxtjs/tailwindcss', '@nuxtjs/color-mode', '@vee-validate/nuxt', '@pinia/nuxt', 'nuxt-icon'],
 
   colorMode: {
     preference: 'system', // default theme

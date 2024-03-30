@@ -1,6 +1,5 @@
 <script setup>
 import { useForm } from 'vee-validate';
-import InputField from './Form/InputField.vue';
 
 const { handleSubmit } = useForm({
     validationSchema: registrationScehma,

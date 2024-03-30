@@ -6,7 +6,7 @@ colorMode.preference = 'garden'
 </script>
 
 <template>
-  <div class="flex flex-col h-screen">
+  <div class="">
     <NuxtLayout>
       <NuxtPage />
     </NuxtLayout>

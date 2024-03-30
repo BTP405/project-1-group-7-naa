@@ -1,6 +1,9 @@
 <script setup>
 import { useForm } from "vee-validate";
-import InputField from "./Form/InputField.vue";
+
+
+
+const authStore = useAuthStore();
 
 const { handleSubmit } = useForm({
   validationSchema: loginScehma,
@@ -8,44 +11,21 @@ const { handleSubmit } = useForm({
 
 const onSubmit = handleSubmit(async (values, actions) => {
   try {
-    // Reset the form and the field values to their initial values
-    actions.resetForm();
+    await authStore.authenticateUser(values.username, values.password);
 
-    const data = await $fetch(loginRoute, {
-      method: "POST",
-      body: JSON.stringify(values),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
-    if (data) {
-      // Extract Token from response
-      const token = data.token;
-
-      // Set Token as a cookie
-      const cookie = useCookie("token", token, {
-        maxAge: 300,
-        path: "/",
-        secure: true,
-      });
-
-      cookie.value = token;
-
-      console.log("Token set successfully: ");
-      navigateTo('/library');
+    if (authStore.authenticated) {
+      console.log("Login Successful!");
+      navigateTo('/profile');
+      actions.resetForm();
     } else {
-      console.error("Login Failed!", data.getResponseStatusText);
+      console.error('Login Failed!');
     }
+
   } catch (error) {
     console.error("An error occurred:", error);
   }
 });
 
-definePageMeta({
-    middleware: ["auth"]
-    // or middleware: 'auth'
-  })
 </script>
 
 <template>
@@ -53,21 +33,12 @@ definePageMeta({
     <div class="join join-vertical">
       <!-- Username Field -->
       <div class="join-item py-1">
-        <InputField
-          name="username"
-          labelName="Username"
-          placeholder="Enter a username"
-        />
+        <InputField name="username" labelName="Username" placeholder="Enter a username" />
       </div>
 
       <!-- Password Field -->
       <div class="join-item py-1">
-        <InputField
-          name="password"
-          type="password"
-          labelName="Password:"
-          placeholder="Enter a Password"
-        />
+        <InputField name="password" type="password" labelName="Password:" placeholder="Enter a Password" />
       </div>
 
       <!-- Submit Button -->
