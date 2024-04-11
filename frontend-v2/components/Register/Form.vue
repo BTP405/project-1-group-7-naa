@@ -2,7 +2,7 @@
 import { useForm } from 'vee-validate';
 
 const { handleSubmit } = useForm({
-    validationSchema: registrationScehma,
+    validationSchema: registrationSchema,
 });
 
 
@@ -26,17 +26,17 @@ const onSubmit = handleSubmit(async (values, actions) => {
 
             <!-- Username Field -->
             <div class="join-item py-1">
-               <InputField name="username" labelName="Username" placeholder="Enter a username"/>
+               <UIInputField name="username" labelName="Username" placeholder="Enter a username"/>
              </div>
              
              <!-- Password Field -->
             <div class="join-item py-1">
-               <InputField name="password" type="password" labelName="Password:" placeholder="Enter a Password" />
+               <UIInputField name="password" type="password" labelName="Password:" placeholder="Enter a Password" />
              </div>
 
              <!-- Confirm Password Field -->
             <div class="join-item py-1">
-               <InputField name="confirmPassword" type="password" labelName="Confirm Password:" placeholder="Re-enter password"/>
+               <UIInputField name="confirmPassword" type="password" labelName="Confirm Password:" placeholder="Re-enter password"/>
              </div>
 
             <!-- Submit Button -->

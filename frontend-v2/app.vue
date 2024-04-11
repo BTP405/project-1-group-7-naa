@@ -1,12 +1,12 @@
 <script setup>
 const colorMode = useColorMode()
 
-colorMode.preference = 'garden'
+colorMode.preference = 'retro'
 
 </script>
 
 <template>
-  <div class="">
+  <div class="flex flex-col h-screen">
     <NuxtLayout>
       <NuxtPage />
     </NuxtLayout>

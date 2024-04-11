@@ -3,16 +3,24 @@
 const { authenticated } = storeToRefs(useAuthStore());
 const { logoutUser } = useAuthStore();
 
+const { $locally } = useNuxtApp();
+
+
 const logout = () => {
     logoutUser();
     navigateTo('/')
 }
 
+const loggedInUserInfo = JSON.parse($locally.getItem('userData'));
+
+
+console.log('Data ', loggedInUserInfo);
+
 </script>
 
 <template>
     <div class="navbar bg-base-100">
-       
+
         <div class="flex-1 px-2">
             <div class="flex justify-between items-center px-2">
                 <!-- Added items-center to vertically center the elements -->
@@ -34,6 +42,7 @@ const logout = () => {
                 </div>
                 <ul tabindex="0"
                     class="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
+                    <span class="p-2 m-2 text-center">Hello, {{ loggedInUserInfo.user_name }}!</span>
                     <li><button @click="logout">Logout</button></li>
                 </ul>
             </div>

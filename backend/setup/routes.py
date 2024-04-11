@@ -1,6 +1,6 @@
 from flask import request, jsonify, Blueprint
 from .models import db, User, Playlist, Music
-from .controllers import UserAuth
+from .controllers import UserAuth, MusicControls
 import base64
 
 # App Routes Decorator
@@ -131,30 +131,16 @@ def get_user_playlist(user_id):
 
     return jsonify({'data': playlists}), 200
 
+
+
 # Music endpoints
 @app_routes.route('/music', methods=['POST'])
 def create_music():
-    data = request.form
-    print(data)
-    user_id = data.get('user_id')
-    user = User.query.get(user_id)
-    
-    if not user:
-        return jsonify({'message': 'User not found'}), 404
-    
-    new_music = Music(
-        title=data['title'],
-        artist=data['artist'],
-        image=request.files['image'].read() if 'image' in request.files else None,
-        mp3_file=request.files['mp3_file'].read() if 'mp3_file' in request.files else None,
-        user_id=user.id,
-        like=False
-    )
+    # return  MusicControls.addRiff(request.form)
+    # Access standard form data
+    return MusicControls.addRiff(request.form, request.files) 
 
-    db.session.add(new_music)
-    db.session.commit()
-    
-    return jsonify({'message': 'New music created!'})
+
 
 @app_routes.route('/music/<int:music_id>/add_fav', methods=['POST'])
 def add_to_fav(music_id):

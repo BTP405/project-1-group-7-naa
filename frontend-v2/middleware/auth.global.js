@@ -1,5 +1,6 @@
 export default defineNuxtRouteMiddleware((to) => {
   const { authenticated } = storeToRefs(useAuthStore());
+  const { userData } = storeToRefs(useAuthStore());
   const token = useCookie("token");
 
   // Check if token exists, before updating that state
@@ -8,8 +9,8 @@ export default defineNuxtRouteMiddleware((to) => {
   }
 
   // if token exists and url is /login redirect to homepage
-  if (token.value && to?.path === 'profile') {
-    return navigateTo('profile');
+  if (token.value && to?.path === '/profile') {
+    return navigateTo(`profile/${userData.value.user_id}`);
   }
 
   // if token doesn't exist redirect to log in
@@ -20,7 +21,7 @@ export default defineNuxtRouteMiddleware((to) => {
 
   // if token exists, redirect to profile page after login   
   if (token.value && to?.path === '/') {
-    return navigateTo('profile');
+    return navigateTo('/profile');
   }
 
 

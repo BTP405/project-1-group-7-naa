@@ -1,12 +1,10 @@
 <script setup>
 import { useForm } from "vee-validate";
 
-
-
 const authStore = useAuthStore();
 
 const { handleSubmit } = useForm({
-  validationSchema: loginScehma,
+  validationSchema: loginSchema,
 });
 
 const onSubmit = handleSubmit(async (values, actions) => {
@@ -15,7 +13,7 @@ const onSubmit = handleSubmit(async (values, actions) => {
 
     if (authStore.authenticated) {
       console.log("Login Successful!");
-      navigateTo('/profile');
+      navigateTo(`profile/${authStore.userData.user_id}`);
       actions.resetForm();
     } else {
       console.error('Login Failed!');
@@ -33,12 +31,12 @@ const onSubmit = handleSubmit(async (values, actions) => {
     <div class="join join-vertical">
       <!-- Username Field -->
       <div class="join-item py-1">
-        <InputField name="username" labelName="Username" placeholder="Enter a username" />
+        <UIInputField name="username" labelName="Username" placeholder="Enter a username" />
       </div>
 
       <!-- Password Field -->
       <div class="join-item py-1">
-        <InputField name="password" type="password" labelName="Password:" placeholder="Enter a Password" />
+        <UIInputField name="password" type="password" labelName="Password:" placeholder="Enter a Password" />
       </div>
 
       <!-- Submit Button -->

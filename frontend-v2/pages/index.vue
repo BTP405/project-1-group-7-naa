@@ -6,6 +6,6 @@ definePageMeta({
 
 <template>
     <div>
-        <Hero />
+        <UIHero />
     </div>
 </template>
