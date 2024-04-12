@@ -9,7 +9,7 @@ musicStore.fetchUploads()
 <template>
     <div class="flex flex-col h-screen">
 
-        <ProfileUploads :userRiffs="musicStore.usersUploads" />
+        <div v-motion-fade-visible-once><ProfileUploads :userRiffs="musicStore.usersUploads" /></div>
         <ProfilePlaylists />
 
         <UIMusicPlayer />

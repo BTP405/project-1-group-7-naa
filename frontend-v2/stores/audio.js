@@ -3,16 +3,16 @@ export const useAudioStore = defineStore("audio", {
     usersUploads: [],
     loading: false,
     selectedAudio: {
-        artist: '',
-        title: '',
-        id: Number,
-        image: '',
-        audioFile: null,
-        duration: Number,
-        currentTime: 0.00,
-        volume: 100
+      artist: "",
+      title: "",
+      id: Number,
+      image: "",
+      audioFile: null,
+      duration: Number,
+      currentTime: 0,
+      volume: 100,
     },
-    isPlaying: false
+    isPlaying: false,
   }),
 
   actions: {
@@ -29,58 +29,71 @@ export const useAudioStore = defineStore("audio", {
     },
 
     setSelectedAudio(audioID) {
-        this.selectedAudio = audioID;
+      this.selectedAudio = audioID;
     },
 
     searchForSelectedAudio(id) {
       for (let i = 0; i < this.usersUploads.length; i++) {
         if (this.usersUploads[i].id === id) {
-            this.selectedAudio.artist = this.usersUploads[i].artist;
-            this.selectedAudio.title = this.usersUploads[i].title;
-            this.selectedAudio.id = this.usersUploads[i].id;
-            this.selectedAudio.image = getBase64Image(this.usersUploads[i].image);
-            this.selectedAudio.audioFile = new Audio(getBase64Audio(this.usersUploads[i].mp3_file));
-            
-            this.selectedAudio.audioFile.addEventListener('loadedmetadata', () => {
-                this.selectedAudio.duration = this.selectedAudio.audioFile.duration;
-              });
-            
-              this.selectedAudio.audioFile.addEventListener('timeupdate', () => {
-                this.selectedAudio.currentTime = this.selectedAudio.audioFile.currentTime;
-                  });
-              break;
+          this.selectedAudio.artist = this.usersUploads[i].artist;
+          this.selectedAudio.title = this.usersUploads[i].title;
+          this.selectedAudio.id = this.usersUploads[i].id;
+          this.selectedAudio.image = getBase64Image(this.usersUploads[i].image);
+          this.selectedAudio.audioFile = new Audio(
+            getBase64Audio(this.usersUploads[i].mp3_file)
+          );
+
+          this.selectedAudio.audioFile.addEventListener(
+            "loadedmetadata",
+            () => {
+              this.selectedAudio.duration =
+                this.selectedAudio.audioFile.duration;
+            }
+          );
+
+         if (this.isPlaying) {
+           this.selectedAudio.audioFile.addEventListener("timeupdate", () => {
+             this.selectedAudio.currentTime =
+               this.selectedAudio.audioFile.currentTime;
+           });
+         }
+
+          
+          break;
         }
       }
       return null; // If no object with the provided ID is found
     },
 
     togglePlay() {
-        this.isPlaying = !this.isPlaying;
-        if (this.isPlaying) {
-          this.selectedAudio.audioFile.play();
-        } else {
-          this.selectedAudio.audioFile.pause();
-        }
-      },
+      this.isPlaying = !this.isPlaying;
+      if (this.isPlaying) {
+        this.selectedAudio.audioFile.play();
+      } else {
+        this.selectedAudio.audioFile.pause();
+      }
+    },
 
-      stopAudio() {
+    stopAudio() {
+      if (this.isPlaying) {
         this.isPlaying = false;
         this.selectedAudio.audioFile.pause();
         this.selectedAudio.audioFile.currentTime = 0; // Reset the audio to the beginning
-      },
-
-      updateVolume() {
-        this.selectedAudio.audioFile.volume = this.selectedAudio.volume / 100;
-      },
-
-      playAudio() {
-        this.isPlaying = true;
-        this.selectedAudio.audioFile.play();
-      },
-
-      pauseAudio() {
-        this.isPlaying = false;
-        this.selectedAudio.audioFile.pause();
       }
+    },
+
+    updateVolume() {
+      this.selectedAudio.audioFile.volume = this.selectedAudio.volume / 100;
+    },
+
+    playAudio() {
+      this.isPlaying = true;
+      this.selectedAudio.audioFile.play();
+    },
+
+    pauseAudio() {
+      this.isPlaying = false;
+      this.selectedAudio.audioFile.pause();
+    },
   },
 });

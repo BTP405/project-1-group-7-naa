@@ -1,18 +1,26 @@
 <script setup>
 
+const optionsClicked = useState('options', () => false);
+
+
 const props = defineProps({
     userRiffs: Array,
 })
 
 const getBase64Image = (base64String) => {
-        return `data:image/jpeg;base64,${base64String}`;
-    };
+    return `data:image/jpeg;base64,${base64String}`;
+};
+
+const handleRightClick = () => {
+    console.log('Hello');
+}
+
 
 </script>
 
 <template>
     <div>
-        <div class="m-12 py-4">
+        <div  class="m-12 py-4">
             <div class="flex flex-center">
                 <div class="flex-1">
                     <h2 class="font-bold text-2xl">Uploaded Riffs</h2>
@@ -22,7 +30,7 @@ const getBase64Image = (base64String) => {
             </div>
 
             <div class="flex ">
-                <UIRiffCard class="mr-3" v-if="userRiffs" v-for="(riff, index) in userRiffs" :key="index" :title="riff.title" :description="riff.artist"
+                <UIRiffCard @contextmenu.prevent="handleRightClick" tabindex="0" class="mr-3" v-if="userRiffs" v-for="(riff, index) in userRiffs" :key="index" :title="riff.title" :description="riff.artist"
                     :image-src="getBase64Image(riff.image)" :audioString="riff.mp3_file" :audioId="riff.id" />
             </div>
 

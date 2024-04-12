@@ -49,16 +49,15 @@ const audio = new Audio();
 
                         <div class="progress-container">
                             <span
-                                class="total-time text-white text-sm font-medium pr-2">{{formatTime(selectedAudio.currentTime)
+                                class="countdown text-white text-sm font-medium pr-2">{{formatTime(selectedAudio.currentTime)
                                 }}</span>
                             <progress class="progress progress-secondary w-96 " :value="selectedAudio.currentTime"
                                 :max="selectedAudio.duration"></progress>
                             <span
-                                class="total-time text-white text-sm font-medium pl-2">{{formatTime(selectedAudio.duration)
+                                class="text-white text-sm font-medium pl-2">{{formatTime(selectedAudio.duration)
                                 }}</span>
                         </div>
 
-                        <!-- <progress class="progress-bar" :max="selectedAudio.duration" :value="selectedAudio.currentTime"></progress> -->
 
                     </div>
                 </div>

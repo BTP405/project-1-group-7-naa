@@ -12,18 +12,19 @@ const props = defineProps({
 
 const playRiff = () => {
     if (musicStore.selectedAudio.id == Number) {
-        musicStore.searchForSelectedAudio(props.audioId);
         musicStore.isPlaying = true;
+        musicStore.searchForSelectedAudio(props.audioId);
         musicStore.selectedAudio.audioFile.play();
     }  
     
     if (musicStore.selectedAudio.id != Number) {
         musicStore.stopAudio();
-        musicStore.searchForSelectedAudio(props.audioId);
         musicStore.isPlaying = true;
+        musicStore.searchForSelectedAudio(props.audioId);
         musicStore.selectedAudio.audioFile.play();
     }
 }
+
 
 </script>
 

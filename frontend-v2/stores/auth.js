@@ -9,17 +9,17 @@ export const useAuthStore = defineStore('auth', {
     actions: {
         async authenticateUser(username, password) {
 
-            const { data, pending } = await useFetch(loginRoute, {
+            const data = await $fetch(loginRoute, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: {username, password},
             })
 
-            this.loading = pending;
+            console.log(data);
 
-            if (data.value) {
+            if (data) {
                 const token = useCookie('token');
-                token.value = data?.value?.token;
+                token.value = data.token;
                 this.authenticated = true;
                 this.userData = jwtDecode(token.value);
                 localStorage.setItem('userData', JSON.stringify(this.userData));
