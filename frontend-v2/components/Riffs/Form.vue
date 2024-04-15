@@ -51,7 +51,7 @@ const onSubmit = handleSubmit(async (values, actions) => {
 
             <!-- Title Field -->
             <div class="join-item py-1">
-               <UIInputField name="title" labelName="Song Title:" placeholder="Add a title"/>
+               <UIInputField name="title" labelName="Song Title:" placeholder="Add a title" tabindex="0"/>
              </div>
              
              <!-- Artist Field -->

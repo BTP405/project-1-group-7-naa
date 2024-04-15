@@ -1,7 +1,7 @@
 export const useAudioStore = defineStore("audio", {
   state: () => ({
     usersUploads: [],
-    loading: false,
+    loading: Boolean,
     selectedAudio: {
       artist: "",
       title: "",
@@ -20,9 +20,13 @@ export const useAudioStore = defineStore("audio", {
       const loggedInUserInfo = JSON.parse(localStorage.getItem("userData"));
 
       try {
-        useFetch(
-          `http://localhost:5000/user/${loggedInUserInfo.user_id}/music`
-        ).then((response) => (this.usersUploads = response.data.value.music));
+        const { data, pending, refresh } = await useFetch(`http://localhost:5000/user/${loggedInUserInfo.user_id}/music`, {
+          server: false,
+        });
+
+        this.usersUploads = data.value.music;
+        this.loading = pending.value;
+
       } catch (error) {
         console.error("Error: ", error);
       }
@@ -65,6 +69,29 @@ export const useAudioStore = defineStore("audio", {
       return null; // If no object with the provided ID is found
     },
 
+    nextSong(songID) {
+      for (let i = 0; i < this.usersUploads.length; i++) {
+        if (this.usersUploads[i].id === songID) {
+          if (i < this.usersUploads.length - 1) {
+            this.stopAudio();
+            this.playOtherAudio(this.usersUploads[i + 1].id);
+          }
+          break;
+        }
+      }
+    },
+
+    previousSong(songID) {
+      for (let i = 0; i < this.usersUploads.length; i++) {
+        if (this.usersUploads[i].id === songID) {
+          if (i > 0) {
+            this.playOtherAudio(this.usersUploads[i - 1].id);
+          }
+          break;
+        }
+      }
+    },
+
     togglePlay() {
       this.isPlaying = !this.isPlaying;
       if (this.isPlaying) {
@@ -84,6 +111,24 @@ export const useAudioStore = defineStore("audio", {
 
     updateVolume() {
       this.selectedAudio.audioFile.volume = this.selectedAudio.volume / 100;
+    },
+
+    updateCurrentTime() {
+      this.selectedAudio.audioFile.currentTime = this.selectedAudio.currentTime;
+    },
+
+    startAudio(songID) {
+      this.isPlaying = true;
+      this.searchForSelectedAudio(songID);
+      this.selectedAudio.audioFile.play();
+    },
+
+    playOtherAudio(songID) {
+      this.stopAudio();
+      this.isPlaying = true;
+      this.searchForSelectedAudio(songID);
+      this.updateVolume()
+      this.selectedAudio.audioFile.play();
     },
 
     playAudio() {

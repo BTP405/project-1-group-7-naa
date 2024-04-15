@@ -3,8 +3,7 @@
 const { selectedAudio, isPlaying } = storeToRefs(useAudioStore())
 const musicStore = useAudioStore();
 
-const audio = new Audio();
-// audio.loa
+// const audio = new Audio();
 
 </script>
 
@@ -27,7 +26,7 @@ const audio = new Audio();
                     <div class="flex flex-col items-center justify-center m-4">
 
                         <div class="flex pb-5">
-                            <button class="">
+                            <button @click="musicStore.previousSong(selectedAudio.id)" class="">
                                 <Icon size="2rem" name="ic:baseline-fast-rewind"
                                     class="text-white hover:text-sky-300 hover:transform hover:scale-110 transition duration-300" />
                             </button>
@@ -41,21 +40,38 @@ const audio = new Audio();
                                     class="text-white hover:text-sky-300 hover:transform hover:scale-110 transition duration-300" />
                             </button>
 
-                            <button class="">
+                            <button @click="musicStore.nextSong(selectedAudio.id)" class="">
                                 <Icon size="2rem" name="ic:baseline-fast-forward"
                                     class="text-white hover:text-sky-300 hover:transform hover:scale-110 transition duration-300" />
                             </button>
                         </div>
 
                         <div class="progress-container">
-                            <span
-                                class="countdown text-white text-sm font-medium pr-2">{{formatTime(selectedAudio.currentTime)
-                                }}</span>
-                            <progress class="progress progress-secondary w-96 " :value="selectedAudio.currentTime"
-                                :max="selectedAudio.duration"></progress>
-                            <span
-                                class="text-white text-sm font-medium pl-2">{{formatTime(selectedAudio.duration)
-                                }}</span>
+
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center w-96">
+
+                                    <span class="countdown text-white text-sm font-medium">{{formatTime(selectedAudio.currentTime) }}</span>
+
+                                    <div class="relative flex-1 mx-4">
+
+                                        <!-- Progress bar -->
+                                        <progress
+                                            class="progress progress-secondary w-full h-6 absolute top-0 left-0 appearance-none pointer-events-none"
+                                            :value="selectedAudio.currentTime" :max="selectedAudio.duration"></progress>
+
+                                        <!-- Input range -->
+                                        <input type="range" min="0" :max="selectedAudio.duration"
+                                            v-model="selectedAudio.currentTime" @input="musicStore.updateCurrentTime()"
+                                            class="w-full h-6 opacity-0 cursor-pointer">
+
+                                    </div>
+                                    
+                                    <span class="duration text-white text-sm font-medium">{{ formatTime(selectedAudio.duration) }}</span>
+
+                                </div>
+                            </div>
+
                         </div>
 
 
@@ -64,11 +80,14 @@ const audio = new Audio();
             </div>
 
             <div class="navbar-end">
-               <div class="w-48 pr-8">
-                <input type="range" min="0" max="100" v-model="selectedAudio.volume" @input="musicStore.updateVolume()" class="range range-secondary range-sm border border-secondary-200" />
-               </div>
+                <div class="w-48 pr-8">
+                    <input type="range" min="0" max="100" v-model="selectedAudio.volume"
+                        @input="musicStore.updateVolume()"
+                        class="range range-secondary range-sm border border-secondary-200" />
+                </div>
             </div>
         </div>
     </footer>
 
 </template>
+

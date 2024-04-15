@@ -12,24 +12,33 @@ const props = defineProps({
 
 const playRiff = () => {
     if (musicStore.selectedAudio.id == Number) {
-        musicStore.isPlaying = true;
-        musicStore.searchForSelectedAudio(props.audioId);
-        musicStore.selectedAudio.audioFile.play();
+        musicStore.startAudio(props.audioId);
     }  
     
     if (musicStore.selectedAudio.id != Number) {
-        musicStore.stopAudio();
-        musicStore.isPlaying = true;
-        musicStore.searchForSelectedAudio(props.audioId);
-        musicStore.selectedAudio.audioFile.play();
+        musicStore.playOtherAudio(props.audioId);
     }
+}
+
+const showMenu = ref(false);
+const menuTop = ref(0);
+const menuLeft = ref(0);
+
+const showContextMenu = (event) => {
+    event.preventDefault();
+    showMenu.value = true;
+    menuTop.value = event.clientY;
+    menuLeft.value = event.clientX;
+
 }
 
 
 </script>
 
 <template>
-    <div class="relative mr-5 group">
+    
+    <div class="relative mr-5 group" @contextmenu.prevent="showContextMenu">
+
         <img class="h-56 w-56 object-cover rounded-md" :src="imageSrc" alt="Random image">
         <div
             class="absolute inset-0 bg-gray-700 opacity-0 rounded-md transition-opacity duration-300 group-hover:opacity-60">
