@@ -3,7 +3,10 @@ export default defineNuxtConfig({
   devtools: { enabled: false },
   routeRules: {
     '/': {prerender: true},
-    '/profile/*': {ssr: false},
+    '/profile': {ssr: false},
+    '/riffs': {ssr: false},
+    '/playlist/*': {ssr: false},
+    '/playlists': {ssr: false},
   },
   alias: {
     pinia: "/node_modules/@pinia/nuxt/node_modules/pinia/dist/pinia.mjs"

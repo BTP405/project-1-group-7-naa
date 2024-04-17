@@ -1,8 +1,9 @@
 from flask import jsonify, request, session
-from .models import db, User, Playlist, Music
+from .models import db, User, Playlist, Music, association_table
 from dotenv import load_dotenv
 from datetime import datetime, timedelta
 import jwt
+import base64
 import os
 
 load_dotenv()
@@ -160,4 +161,106 @@ class MusicControls:
         
         except Exception as e:
             return jsonify({"message": str(e)}), 500
+        
+class PlaylistControls:
+    @staticmethod
+    def addPlaylist(data, files):
+        
+        name = data.get('name')
+        user_id = data.get("user_id")
+        
+        try:
+            image_file = files['image'].read() if 'image' in files else None
+        except Exception as e:
+            # Handle file reading error (log or return specific error message)
+            return jsonify({"message": f"Error reading image file: {str(e)}"}), 400
+        
+        
+        
+        new_playlist = Playlist(
+            name=name, 
+            user_id=user_id, 
+            image=image_file
+        )
+        db.session.add(new_playlist)
+        db.session.commit()
+        return jsonify({'message': 'New playlist created!'})
+    
+    @staticmethod
+    def findSingleUserPlaylist(user_id, playlist_id):
+        try:
+            user = User.query.get(user_id)
+            if not user:
+                return jsonify({'message': 'User not found'}), 404
 
+            user_playlist = Playlist.query.filter_by(user_id=user_id, id=playlist_id).first()
+        
+            if not user_playlist:
+                return jsonify({'message': 'No playlist found!'}), 404
+            
+            foundPlaylist = {
+                'id': user_playlist.id,
+                'name': user_playlist.name,
+                'image': base64.b64encode(user_playlist.image).decode('utf-8') if user_playlist.image else None
+            }
+
+            return jsonify({'playlist': foundPlaylist}), 200
+
+        except Exception as e:
+            return jsonify({"message": f"Error occurred with playlist: {str(e)}"}), 400
+    
+    @staticmethod
+    def addToPlaylist(playlist_id, music_id):
+        try:
+            # Fetch the playlist object from the database or return a 404 error if not found
+            playlist = Playlist.query.get_or_404(playlist_id)
+
+
+            # Validate whether music_id is provided
+            if music_id is None:
+                return jsonify({'error': 'No music_id provided'}), 400
+
+            # Fetch the music object from the database or return a 404 error if not found
+            music = Music.query.get_or_404(music_id)
+
+            # Check if the music is already in the playlist
+            if music in playlist.musics:
+                return jsonify({'error': 'Music is already in the playlist'}), 400
+
+            # Add the music to the playlist
+            playlist.musics.append(music)
+
+            # Commit the changes to the database
+            db.session.commit()
+            return jsonify({'message': f'Music added to playlist {playlist.name} successfully'}), 200
+
+        except Exception as e:
+            # Rollback the session in case of any exception
+            db.session.rollback()
+            return jsonify({'error': str(e)}), 500
+        
+    @staticmethod
+    def removeSongFromPlaylist(playlist_id, music_id):
+        try:
+            # Get the playlist
+            playlist = db.session.query(Playlist).filter_by(id=playlist_id).first()
+            if not playlist:
+                print("Playlist not found.")
+                return
+
+            # Get the music
+            music = db.session.query(Music).filter_by(id=music_id).first()
+            if not music:
+                print("Music not found.")
+                return
+
+            # Remove the association
+            if music in playlist.musics:
+                playlist.musics.remove(music)
+                db.session.commit()
+                return jsonify({'message': 'Music track deleted successfully'}), 200
+            else:
+                return jsonify({'error': 'Music track not found'}), 404
+
+        except Exception as e:
+            return jsonify({'error': str(e)}), 500

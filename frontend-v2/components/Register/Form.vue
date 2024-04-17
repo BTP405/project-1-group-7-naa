@@ -41,7 +41,7 @@ const onSubmit = handleSubmit(async (values, actions) => {
 
             <!-- Submit Button -->
             <div class="py-5">
-                <button type="submit" class="btn btn-success btn-wide">Create Account</button>
+                <button type="submit" class="btn btn-neutral btn-wide">Create Account</button>
             </div>
 
         </div>

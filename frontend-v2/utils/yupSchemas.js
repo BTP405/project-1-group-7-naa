@@ -21,3 +21,8 @@ export const riffSchema = Yup.object().shape({
     songfile: Yup.mixed().required('MP3 file is Required'),
     user_id: Yup.string().required()
 })
+
+export const playlistSchema = Yup.object().shape({
+    name: Yup.string().required('Playlist Name is Required'),
+    thumbnail: Yup.mixed().required('Thumbnail is Required'),
+})

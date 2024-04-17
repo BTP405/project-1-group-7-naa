@@ -13,7 +13,7 @@ const onSubmit = handleSubmit(async (values, actions) => {
 
     if (authStore.authenticated) {
       console.log("Login Successful!");
-      navigateTo(`profile/${authStore.userData.user_id}`);
+      navigateTo(`/profile`);
       actions.resetForm();
     } else {
       console.error('Login Failed!');
@@ -41,7 +41,7 @@ const onSubmit = handleSubmit(async (values, actions) => {
 
       <!-- Submit Button -->
       <div class="py-5">
-        <button type="submit" class="btn btn-success btn-wide">Login</button>
+        <button type="submit" class="btn btn-neutral btn-wide">Login</button>
       </div>
     </div>
   </form>

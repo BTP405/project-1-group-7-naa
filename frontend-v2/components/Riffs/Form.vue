@@ -40,6 +40,8 @@ const onSubmit = handleSubmit(async (values, actions) => {
         console.error('Error: ', error);
     }
 
+    location.reload();
+
 });
 
     
@@ -71,7 +73,7 @@ const onSubmit = handleSubmit(async (values, actions) => {
 
             <!-- Submit Button -->
             <div class="py-5 w-full">
-                <button type="submit" class="btn text-base btn-success w-full">Upload Riff</button>
+                <button type="submit" class="btn text-base btn-neutral w-full">Upload Riff</button>
             </div>
 
         </div>

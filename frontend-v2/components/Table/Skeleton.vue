@@ -3,6 +3,7 @@
 </script>
 
 <template>
-    <div v-motion >
+    <div>
+
     </div>
 </template>

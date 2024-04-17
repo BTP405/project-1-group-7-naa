@@ -13,6 +13,8 @@ export const useAudioStore = defineStore("audio", {
       volume: 100,
     },
     isPlaying: false,
+    toBeDeleted: false,
+    audioEditId: Number,
   }),
 
   actions: {
@@ -29,6 +31,7 @@ export const useAudioStore = defineStore("audio", {
 
       } catch (error) {
         console.error("Error: ", error);
+        this.loading = false;
       }
     },
 

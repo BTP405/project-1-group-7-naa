@@ -33,6 +33,7 @@ export const useAuthStore = defineStore('auth', {
             token.value = null;
             useAudioStore().stopAudio();
             useAudioStore().$reset();
+            location.reload();   
         },
     },
 });

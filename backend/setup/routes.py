@@ -1,6 +1,6 @@
 from flask import request, jsonify, Blueprint
 from .models import db, User, Playlist, Music
-from .controllers import UserAuth, MusicControls
+from .controllers import UserAuth, MusicControls, PlaylistControls
 import base64
 
 # App Routes Decorator
@@ -82,8 +82,8 @@ def get_user_music(user_id):
 
     return jsonify({'music': music_list}), 200
 
-@app_routes.route('/user/<int:user_id>/favorits', methods=['GET'])
-def get_user_music_favorits(user_id):
+@app_routes.route('/user/<int:user_id>/favorites', methods=['GET'])
+def get_user_music_favorites(user_id):
 
     user = User.query.get(user_id)
     if not user:
@@ -129,8 +129,11 @@ def get_user_playlist(user_id):
         }
         playlists.append(playlist_data)
 
-    return jsonify({'data': playlists}), 200
+    return jsonify({'playlists': playlists}), 200
 
+@app_routes.route('/playlists/<int:user_id>/<int:playlist_id>', methods=['GET'])
+def findSingleUserPlaylist(user_id, playlist_id):
+    return PlaylistControls.findSingleUserPlaylist(user_id, playlist_id)
 
 
 # Music endpoints
@@ -165,47 +168,13 @@ def remove_from_fav(music_id):
 # Playlist endpoints
 @app_routes.route('/playlist', methods=['POST'])
 def create_playlist():
-    data = request.form
-    new_playlist = Playlist(
-        name=data['name'], 
-        user_id=data['user_id'], 
-        image=request.files['image'].read() if 'image' in request.files else None
-    )
-    db.session.add(new_playlist)
-    db.session.commit()
-    return jsonify({'message': 'New playlist created!'})
+    
+    return PlaylistControls.addPlaylist(request.form, request.files);
 
-@app_routes.route('/playlist/<int:playlist_id>/add_music', methods=['POST'])
-def add_music_to_playlist(playlist_id):
-    # Assuming the request contains JSON data with music_id
-    request_data = request.get_json()
-
-    # Validate whether music_id is provided
-    music_id = request_data.get('music_id')
-    if music_id is None:
-        return jsonify({'error': 'No music_id provided'}), 400
-
-    # Fetch the playlist object from the database or return a 404 error if not found
-    playlist = Playlist.query.get_or_404(playlist_id)
-
-    # Fetch the music object from the database or return a 404 error if not found
-    music = Music.query.get_or_404(music_id)
-
-    # Check if the music is already in the playlist
-    if music in playlist.musics:
-        return jsonify({'error': 'Music is already in the playlist'}), 400
-
-    # Add the music to the playlist
-    playlist.musics.append(music)
-
-    try:
-        # Commit the changes to the database
-        db.session.commit()
-        return jsonify({'message': f'Music added to playlist {playlist.name} successfully'}), 200
-    except Exception as e:
-        # Rollback the session in case of any exception
-        db.session.rollback()
-        return jsonify({'error': str(e)}), 500
+@app_routes.route('/playlist/<int:playlist_id>/<int:music_id>', methods=['POST'])
+def addToPlaylist(playlist_id, music_id):
+    
+    return PlaylistControls.addToPlaylist(playlist_id, music_id)
     
 def get_music_by_playlist_id(playlist_id):
     playlist = Playlist.query.get(playlist_id)
@@ -229,7 +198,7 @@ def get_music_by_playlist(playlist_id):
         # Add more attributes as needed
     } for track in music]
 
-    return jsonify({"music":music_list}), 200
+    return jsonify({"playlistMusic": music_list }), 200
 
 @app_routes.route('/playlist/<int:playlist_id>', methods=['DELETE'])
 def remove_playlist(playlist_id):
@@ -260,3 +229,8 @@ def remove_music(music_id):
     else:
         # Return an error message if the music track does not exist
         return jsonify({'error': 'Music track not found'}), 404
+    
+@app_routes.route('/playlist/<int:playlist_id>/<int:music_id>', methods=['DELETE'])
+def remove_music_from_playlist(playlist_id, music_id):
+    
+    return PlaylistControls.removeSongFromPlaylist(playlist_id, music_id);

@@ -8,7 +8,7 @@ const musicStore = useAudioStore();
 </script>
 
 <template>
-    <footer v-if="selectedAudio.id != Number" class="mt-auto bg-neutral">
+    <footer class="mt-auto bg-neutral fixed bottom-0 w-full">
         <div class="navbar">
 
             <div class="navbar-start">
