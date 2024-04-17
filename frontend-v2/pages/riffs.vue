@@ -44,7 +44,7 @@ playlistStore.fetchPlaylists();
                     </table>
                 </div>
 
-                <UIMusicPlayer />
+                <UIMusicPlayer :sticky="true" />
 
             </div>
         </template>

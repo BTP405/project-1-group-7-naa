@@ -24,7 +24,7 @@ if (playlistStore.selectedPlaylist != null) {
 
         <template v-if="audioStore.selectedAudio.id != Number">
             <div>
-                <div class="overflow-x-auto mx-64">
+                <div class="overflow-x-auto mx-64 my-8">
                     <table class="table">
                         <!-- head -->
                         <thead>
@@ -51,7 +51,7 @@ if (playlistStore.selectedPlaylist != null) {
                     </table>
                 </div>
 
-                <UIMusicPlayer />
+                <UIMusicPlayer :sticky="false"/>
 
             </div>
         </template>

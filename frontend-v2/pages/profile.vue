@@ -19,7 +19,7 @@ if (playlistStore.userPlaylists.length === 0) {
         <div class="flex flex-col h-screen">
             <ProfileUploads :userRiffs="musicStore.usersUploads" />
             <ProfilePlaylists class="pb-32" :userPlaylists="playlistStore.userPlaylists" />
-            <UIMusicPlayer />
+            <UIMusicPlayer :sticky="true" />
         </div>
     </template>
 

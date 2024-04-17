@@ -1,5 +1,9 @@
 <script setup>
 
+const props = defineProps({
+    sticky: Boolean
+})
+
 const { selectedAudio, isPlaying } = storeToRefs(useAudioStore())
 const musicStore = useAudioStore();
 
@@ -8,7 +12,7 @@ const musicStore = useAudioStore();
 </script>
 
 <template>
-    <footer class="mt-auto bg-neutral fixed bottom-0 w-full">
+    <footer class="mt-auto bg-neutral" :class="{ 'fixed bottom-0 w-full' : props.sticky }">
         <div class="navbar">
 
             <div class="navbar-start">
