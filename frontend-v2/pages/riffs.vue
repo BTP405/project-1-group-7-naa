@@ -24,7 +24,7 @@ playlistStore.fetchPlaylists();
                                 <th></th>
                                 <th>#</th>
                                 <th>Riff</th>
-                                <th>Add Riff</th>
+                                <th>Add to Playlist</th>
                                 <th>Delete Riff</th>
                             </tr>
                         </thead>

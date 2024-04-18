@@ -51,7 +51,7 @@ if (playlistStore.selectedPlaylist != null) {
                     </table>
                 </div>
 
-                <UIMusicPlayer :sticky="false"/>
+                <UIMusicPlayer :sticky="true"/>
 
             </div>
         </template>
